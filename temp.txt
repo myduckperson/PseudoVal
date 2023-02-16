@@ -37,7 +37,7 @@ const signIn = document.querySelector("#signInOut");
 const signUp = document.querySelector("#signUp");
 const inputClass = document.querySelector("#class");
 const collection = "pseudoMain";
-const tDoc = "template";
+const document = "template";
 /* template:{
     Class: ""
     Name:""
@@ -49,12 +49,13 @@ const tDoc = "template";
 
 signIn.addEventListener("click", signInScript);
 
-signUp.addEventListener("click", signUpScript);
+
+
 
 
 async function signUpScript() {
     signInWithPopup(auth, provider)
-    .then(async result => {
+    .then( async result => {
 
         /* result structure:{
             operationType: "signIn"
@@ -89,20 +90,11 @@ async function signUpScript() {
         const userClass = inputClass.value;
 
         // reading a template document without checking whether it exists or not
-        const docRef = doc(db, collection, tDoc);
-        const docSnap = (await getDoc(docRef)).data();
+        const docRef = doc(db, collection, document);
+        const docSnap = await getDoc(docRef);
+        console.log(docSnap);
 
-        // setting user's info into a template doc
-        docSnap.uid = uid;
-        docSnap.Name = name;
-        docSnap.Class = userClass;
-        console.log(docSnap)
-
-        // sending a filled doc to firestore with a name of uid
-        await setDoc(doc(db, collection, uid), docSnap);
-        // console.log(docSnap.data());
-
-    }).catch(async error => {
+    }).catch( error => {
         // Handle Errors here.
         const errorCode = error.code;
         console.log(error, errorCode);
