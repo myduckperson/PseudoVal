@@ -6,9 +6,9 @@ Do-s:
 create a User;
 signIn signOut cycle;
 write to localstorage;
-===>read from localstorage;
+read from localstorage;
 ==|Task completion progress
-new ui elements;
+===>new ui elements;
 change DB to fit the needs;
 read progress from localstorage;
 ==|Admin's view

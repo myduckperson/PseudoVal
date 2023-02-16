@@ -199,7 +199,7 @@ async function signInScript() {
         const user = result.user;
         const name = user.displayName;
         const uid = user.uid;
-        const userDoc = (await getDoc(doc(db, collection, tDoc))).data();
+        const userDoc = (await getDoc(doc(db, collection, uid))).data();
         localStorage.setItem("uid", uid);
         localStorage.setItem("Name", name);
         localStorage.setItem("Class", userDoc.Class);
