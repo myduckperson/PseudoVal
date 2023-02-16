@@ -23,3 +23,4 @@ making a safe admin view;
 Not-do-s:
 for later
 object parser into a localStorage
+Promise.ALL

@@ -74,7 +74,7 @@ function timeout(ms) {
 onAuthStateChanged(auth, async (user) => {
     if (user) {
     // timer to slow down the function
-        await timeout(1000);
+    await timeout(1000);
         // User is signed in
         const uid = user.uid;
         console.log("Hello, " + user.displayName + "!");
@@ -199,7 +199,7 @@ async function signInScript() {
         const user = result.user;
         const name = user.displayName;
         const uid = user.uid;
-        const userDoc = (await getDoc(doc(db, collection, uid))).data();
+        const userDoc = (await getDoc(doc(db, collection, tDoc))).data();
         localStorage.setItem("uid", uid);
         localStorage.setItem("Name", name);
         localStorage.setItem("Class", userDoc.Class);
