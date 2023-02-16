@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
-import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup  } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
+import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup, signOut  } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-firestore.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -35,7 +35,9 @@ const db = getFirestore(app);
 
 const signIn = document.querySelector("#signInOut");
 const signUp = document.querySelector("#signUp");
+const exit = document.querySelector("#exit");
 const inputClass = document.querySelector("#class");
+const greeting = document.querySelector("#greeting");
 const collection = "pseudoMain";
 const tDoc = "template";
 /* template:{
@@ -50,6 +52,36 @@ const tDoc = "template";
 signIn.addEventListener("click", signInScript);
 
 signUp.addEventListener("click", signUpScript);
+
+exit.addEventListener("click", exitF);
+
+
+/* Зміна стану авторизації відбувається:
+        при оновленні сторінки,
+        при вході та виході, але не при повторному вході в той самий аккаунт
+*/
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+      // User is signed in
+      const uid = user.uid;
+      console.log("Hello, " + user.displayName + "!");
+      greeting.innerText = "Hello, " + user.displayName + "!";
+    } else {
+      // User is signed out
+      console.log("Hello, stranger!");
+      greeting.innerText = "Hello, stranger!";
+    }
+  });
+  
+
+
+
+
+
+
+
+
+
 
 
 async function signUpScript() {
@@ -96,11 +128,11 @@ async function signUpScript() {
         docSnap.uid = uid;
         docSnap.Name = name;
         docSnap.Class = userClass;
-        console.log(docSnap)
 
         // sending a filled doc to firestore with a name of uid
         await setDoc(doc(db, collection, uid), docSnap);
         // console.log(docSnap.data());
+        console.log(user.displayName);
 
     }).catch(async error => {
         // Handle Errors here.
@@ -128,7 +160,7 @@ async function signInScript() {
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
-        console.log(result);
+        console.log(user.displayName);
 
     }).catch((error) => {
         // Handle Errors here.
@@ -144,7 +176,15 @@ async function signInScript() {
 
 
 
-
+async function exitF(){
+    signOut(auth).then(() => {
+        // Sign-out successful.
+        console.log("bye");
+      }).catch((error) => {
+        // An error happened.
+      });
+      
+}
 
 
 
