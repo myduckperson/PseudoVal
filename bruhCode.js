@@ -68,8 +68,13 @@ exit.addEventListener("click", exitF);
         при оновленні сторінки,
         при вході та виході, але не при повторному вході в той самий аккаунт
 */
-onAuthStateChanged(auth, (user) => {
+function timeout(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+onAuthStateChanged(auth, async (user) => {
     if (user) {
+    // timer to slow down the function
+        await timeout(1000);
         // User is signed in
         const uid = user.uid;
         console.log("Hello, " + user.displayName + "!");
@@ -86,7 +91,6 @@ onAuthStateChanged(auth, (user) => {
         gradesH.innerHTML += localGrades;
 
         // AUTHSTATECHANGED IS FASTER THAN SIGNUP/SIGNIN FUNCTION 
-
     } else {
         // User is signed out
         console.log("Hello, stranger!");
@@ -97,7 +101,7 @@ onAuthStateChanged(auth, (user) => {
         classH.innerHTML = "Your class is: ";
         gradesH.innerHTML = "Your grades are: ";
     }
-  });
+});
   
 
 
