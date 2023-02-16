@@ -4,9 +4,9 @@ AND admins view
 
 Do-s:
 create a User;
-?>signIn signOut cycle;
-===>write to localstorage;
-read from localstorage;
+signIn signOut cycle;
+write to localstorage;
+===>read from localstorage;
 ==|Task completion progress
 new ui elements;
 change DB to fit the needs;
@@ -22,3 +22,4 @@ making a safe admin view;
 ###################################################
 Not-do-s:
 for later
+object parser into a localStorage

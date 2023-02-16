@@ -38,14 +38,6 @@ const signUp = document.querySelector("#signUp");
 const exit = document.querySelector("#exit");
 const inputClass = document.querySelector("#class");
 const greeting = document.querySelector("#greeting");
-
-// localStorage loaders
-const uidH = document.querySelector("#uid");
-const nameH = document.querySelector("#Name");
-const classH = document.querySelector("#Class");
-const gradesH = document.querySelector("#grades");
-
-
 const collection = "pseudoMain";
 const tDoc = "template";
 /* template:{
@@ -70,32 +62,14 @@ exit.addEventListener("click", exitF);
 */
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        // User is signed in
-        const uid = user.uid;
-        console.log("Hello, " + user.displayName + "!");
-        greeting.innerText = "Hello, " + user.displayName + "!";
-
-        const localUid = localStorage.getItem("uid");
-        const localName = localStorage.getItem("Name");
-        const localClass = localStorage.getItem("Class");
-        const localGrades = localStorage.getItem("grades");
-
-        uidH.innerHTML += localUid;
-        nameH.innerHTML += localName;
-        classH.innerHTML += localClass;
-        gradesH.innerHTML += localGrades;
-
-        // AUTHSTATECHANGED IS FASTER THAN SIGNUP/SIGNIN FUNCTION 
-
+      // User is signed in
+      const uid = user.uid;
+      console.log("Hello, " + user.displayName + "!");
+      greeting.innerText = "Hello, " + user.displayName + "!";
     } else {
-        // User is signed out
-        console.log("Hello, stranger!");
-        greeting.innerText = "Hello, stranger!";
-
-        uidH.innerHTML = "Your uid is: ";
-        nameH.innerHTML = "Your name is: ";
-        classH.innerHTML = "Your class is: ";
-        gradesH.innerHTML = "Your grades are: ";
+      // User is signed out
+      console.log("Hello, stranger!");
+      greeting.innerText = "Hello, stranger!";
     }
   });
   
@@ -161,7 +135,7 @@ async function signUpScript() {
         // sending a filled to localStorage
         localStorage.setItem("uid", uid);
         localStorage.setItem("Name", name);
-        localStorage.setItem("Class", userClass);
+        localStorage.setItem("Class", Class);
         localStorage.setItem("grades", docSnap.grades);
 
         // console.log(docSnap.data());
@@ -195,7 +169,9 @@ async function signInScript() {
         const user = result.user;
         const name = user.displayName;
         const uid = user.uid;
-        const userDoc = (await getDoc(doc(db, collection, tDoc))).data();
+
+        const userDoc = (await getDoc(db, collection, uid)).data();
+
         localStorage.setItem("uid", uid);
         localStorage.setItem("Name", name);
         localStorage.setItem("Class", userDoc.Class);
@@ -219,7 +195,6 @@ async function exitF(){
     signOut(auth).then(() => {
         // Sign-out successful.
         console.log("bye");
-        localStorage.clear();
       }).catch((error) => {
         // An error happened.
       });
